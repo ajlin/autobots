@@ -3,45 +3,79 @@
 ##### tldr; objs you can plug into a sklearn.pipeline.Pipeline that can take a whole DataFrame and only transform certain things at each step
 
 ## Usage:
-```from autobots import *
+```
+from autobots import *
+
+import pandas as pd, numpy as np
 from sklearn.pipeline import Pipeline
 ```
+
+### define transormations
+```
+my_map_function = (lambda x: x)  #lambda over a column
+
+my_apply_function = (lambda row: row['col3'] + row['col4']) #lambda over rows
+
+def my_custom_function (x):
+  #do some stuff
+  return output
+
+
 ```
 
+## instantiate objects
+```
+# transform col1 into colA
+colA = ColumnMapper(func=my_map_function, column='col1', name='colA', drop=True)
 
+# create colB from col2
+colB = ColumnMapper(func=my_custom_function, column='col2', name='colB', drop=False)
 
-#vectorize text in this column
+# create colC from col3 and col4
+colB = ColumnApplier(func=my_apply_function, name='colB', axis=1)
 
+# merge w/values from df2 by key
+merge_df1_df2 = DfMerger(df2,on=['id','date'], how='left', copy=True, validate='m:1')
 
-#dummies
+# pd.get_dummies that can fit_transform X_train and transform X_test based on X_train's dummy columns
+dummy_col5 = DummyEncoder(column='col5')
 
-#dummies
+# drop columns
+drop_list = 'other column names we dont want'.split()
+drop_columns = ColumnSelector(columns=drop_list,drop=True)
 
 ```
 
-## define transformations, instantiate objects ##
+## easy pipeline!
 ```
-#calculate a new column out of a df.column w/ a custom function
-build_newcolumn = ColumnMapper(func=MyFunction,column='myColumn',name='newColumn',drop=False)
+# build a pipe
 
-# date_to_utc defined above
-utc = ColumnMapper(func=date_to_utc,column='date',name='utc',drop=False)
-
-#merge w/weather from weatherdf by DATE
-merge_weather = DfMerger(weather,on=['utc','date'],how='left',copy=True,v #dummy trap locations
-
-#dummy the address column
-dummy_address = DummyEncoder(column='address') #dummy species
-
-#dummy the species column
-dummy_species = DummyEncoder(column='species')
-
-#drop stuff we hate
-drop_us = 'lat long loc utc date 2007 2008 2009 2010 2011 2012 2013 2014' drop_columns = ColumnSelector(columns=drop_us,drop=True)
-
-```
 pipe = []
-pipe.appemnd
+pipe.append(('colA',colA))
+pipe.append(('colB',colB))
+pipe.append(('colC',colC))
+pipe.append(('merge',merge_df1_df2))
+pipe.append(('dummy_col5',dummy_col5))
+pipe.append(('drop_columns',drop_columns))
 
+preprocess_X = Pipeline(pipe)
+```
+ 
+## build features
+```
+from sklearn.model_selection import train_test_split
+
+Xtrain,Xtest,ytrain,ytest = train_test_split(X,y)
+
+Xtrain = preprocess_X.fit_transform(Xtrain)
+Xtest = preprocess_X.transform(Xtest)
 ```
 
+## work on unseen data
+```
+newdf = pd.read_csv('./from_kaggle.csv')
+
+X = preprocess_X.transform(newdf)
+
+yhat - model.predict(X)
+```

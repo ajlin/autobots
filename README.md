@@ -4,15 +4,15 @@ a small set of `scikit-learn` Transformers to make constructing feature `sklearn
 ##### tldr; some objects you can plug into a sklearn.pipeline.Pipeline that can take a whole DataFrame and only transform certain things at each step
 
 
-## 
-| object | description |
+## Inventory
+| obj | description |
 |----|----|
 `ColumnSelector()`  |  select or drop a list of colummns by name
 `ColumnMapper()`  | use a `.map()` function on a column
 `ColumnApplier()`  | use a `.apply()` function on mult columns
 `DfMerger()`  |  merge your Xdf with data from an outside df
 `DummyEncoder()`  | `pd.get_dummies()` a column
-`CVecTransformer(CountVectorizer)` | `sklearn.preprocessing.text.CountVectorizer` on a column
+`CVecTransformer()` | `sklearn.preprocessing.text.CountVectorizer` on a column
 
 ## Usage:
 `from autobots import *`

@@ -1,8 +1,18 @@
 # autobots
-a small set of `scikit-learn` Transformers (har har) to make constructing feature `sklearn.Pipeline`s out of heterogenous DataFrames 'easier' (instead of having to split the df and FeatureUnion nested Pipelines back together, and leaves parameters accessible at a higher hierarchy for GridSearch and such)
+a small set of `scikit-learn` Transformers to make constructing feature `sklearn.Pipeline`s out of heterogenous DataFrames 'easier' (instead of having to split the df and FeatureUnion nested Pipelines back together, and leaves parameters accessible at a higher hierarchy for GridSearch and such).  Works mostly in `pandas` dataframes and series, some in `numpy` arrays.
 
 ##### tldr; some objects you can plug into a sklearn.pipeline.Pipeline that can take a whole DataFrame and only transform certain things at each step
 
+
+## 
+| object | description |
+|----|----|
+`ColumnSelector()`  |  select or drop a list of colummns by name
+`ColumnMapper()`  | use a `.map()` function on a column
+`ColumnApplier()`  | use a `.apply()` function on mult columns
+`DfMerger()`  |  merge your Xdf with data from an outside df
+`DummyEncoder()`  | `pd.get_dummies()` a column
+`CVecTransformer(CountVectorizer)` | `sklearn.preprocessing.text.CountVectorizer` on a column
 
 ## Usage:
 `from autobots import *`
@@ -28,7 +38,7 @@ colA = ColumnMapper(func=my_map_function, column='col1', name='colA', drop=True)
 colB = ColumnMapper(func=my_custom_function, column='col2', name='colB', drop=False)
 
 # create colC from col3 and col4
-colB = ColumnApplier(func=my_apply_function, name='colB', axis=1)
+colB = ColumnApplier(func=my_apply_function, name='colB')
 
 # merge w/values from df2 by key
 merge_df1_df2 = DfMerger(df2,on=['id','date'], how='left', copy=True, validate='m:1')

@@ -1,5 +1,5 @@
 # autobots
-a small set of `scikit-learn` sklearn.Transformers (har har) to make constructing feature `sklearn.Pipeline`s out of heterogenous DataFrames 'easier' (instead of having to split the df and FeatureUnion nested Pipelines back together, and leaves parameters accessible at a higher hierarchy for GridSearch and such)
+a small set of `scikit-learn` Transformers (har har) to make constructing feature `sklearn.Pipeline`s out of heterogenous DataFrames 'easier' (instead of having to split the df and FeatureUnion nested Pipelines back together, and leaves parameters accessible at a higher hierarchy for GridSearch and such)
 
 ##### tldr; some objects you can plug into a sklearn.pipeline.Pipeline that can take a whole DataFrame and only transform certain things at each step
 

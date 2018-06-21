@@ -75,5 +75,5 @@ newdf = pd.read_csv('./from_kaggle.csv')
 
 X = preprocess_X.transform(newdf)
 
-yhat - model.predict(X)
+yhat = model.predict(X)
 ```

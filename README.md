@@ -32,31 +32,52 @@ def my_custom_function (x):
 ### instantiate objects
 ```
 # transform col1 into colA
-colA = ColumnMapper(func=my_map_function, column='col1', name='colA', drop=True)
+colA = ColumnMapper(func=my_map_function,
+                    column='col1',
+                    name='colA',
+                    drop=True)
 
 # create colB from col2
-colB = ColumnMapper(func=my_custom_function, column='col2', name='colB', drop=False)
+
+colB = ColumnMapper(func=my_custom_function,
+                    column='col2',
+                    name='colB',
+                    drop=False)
+
 
 # create colC from col3 and col4
-colB = ColumnApplier(func=my_apply_function, name='colB')
+
+colB = ColumnApplier(func=my_apply_function,
+                     name='colB')
+
 
 # merge w/values from df2 by key
-merge_df1_df2 = DfMerger(df2,on=['id','date'], how='left', copy=True, validate='m:1')
+
+merge_df1_df2 = DfMerger(df2,
+                        on=['id','date'],
+                        how='left',
+                        copy=True,
+                        validate='m:1')
+
 
 # pd.get_dummies that can fit_transform X_train and transform X_test based on X_train's dummy columns
+
 dummy_col5 = DummyEncoder(column='col5')
 
+
 # drop columns
-drop_list = 'other column names we dont want'.split()
-drop_columns = ColumnSelector(columns=drop_list,drop=True)
+
+drop_list = 'Other Columns We Dont Want'.split()
+drop_columns = ColumnSelector(columns=drop_list,
+                              drop=True)
 
 ```
 
 ### easy pipeline!
 ```
-# build a pipe
 from sklearn.pipeline import Pipeline
 
+# pipe instructions
 pipe = []
 pipe.append(('colA',colA))
 pipe.append(('colB',colB))
@@ -64,6 +85,7 @@ pipe.append(('colC',colC))
 pipe.append(('merge',merge_df1_df2))
 pipe.append(('dummy_col5',dummy_col5))
 pipe.append(('drop_columns',drop_columns))
+
 
 # assemble
 preprocess_X = Pipeline(pipe)

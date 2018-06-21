@@ -1,10 +1,12 @@
 # autobots
-a small set of `scikit-learn` sklearn.Transformers (har har) to make constructing feature `sklearn.Pipeline`s out of heterogenous DataFrames 'easier' (less FeatureUnions out of nested Pipelines, and accessible at a higher hierarchy for GridSearch and such)
+a small set of `scikit-learn` sklearn.Transformers (har har) to make constructing feature `sklearn.Pipeline`s out of heterogenous DataFrames 'easier' (instead of having to split the df and FeatureUnion nested Pipelines back together, and leaves parameters accessible at a higher hierarchy for GridSearch and such)
 
-##### tldr; objs you can plug into a sklearn.pipeline.Pipeline that can take a whole DataFrame and only transform certain things at each step
+##### tldr; some objects you can plug into a sklearn.pipeline.Pipeline that can take a whole DataFrame and only transform certain things at each step
+
 
 ## Usage:
 `from autobots import *`
+
 
 ### define transormations
 ```
@@ -15,8 +17,6 @@ my_apply_function = (lambda row: row['col3'] + row['col4']) #lambda over rows
 def my_custom_function (x):
   #do some stuff
   return output
-
-
 ```
 
 ### instantiate objects
@@ -45,6 +45,7 @@ drop_columns = ColumnSelector(columns=drop_list,drop=True)
 ### easy pipeline!
 ```
 # build a pipe
+from sklearn.pipeline import Pipeline
 
 pipe = []
 pipe.append(('colA',colA))
@@ -54,6 +55,7 @@ pipe.append(('merge',merge_df1_df2))
 pipe.append(('dummy_col5',dummy_col5))
 pipe.append(('drop_columns',drop_columns))
 
+# assemble
 preprocess_X = Pipeline(pipe)
 ```
  

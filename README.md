@@ -24,7 +24,7 @@ def my_custom_function (x):
 
 ```
 
-## instantiate objects
+### instantiate objects
 ```
 # transform col1 into colA
 colA = ColumnMapper(func=my_map_function, column='col1', name='colA', drop=True)
@@ -47,7 +47,7 @@ drop_columns = ColumnSelector(columns=drop_list,drop=True)
 
 ```
 
-## easy pipeline!
+### easy pipeline!
 ```
 # build a pipe
 
@@ -62,7 +62,7 @@ pipe.append(('drop_columns',drop_columns))
 preprocess_X = Pipeline(pipe)
 ```
  
-## build features
+### build features
 ```
 from sklearn.model_selection import train_test_split
 
@@ -72,7 +72,7 @@ Xtrain = preprocess_X.fit_transform(Xtrain)
 Xtest = preprocess_X.transform(Xtest)
 ```
 
-## work on unseen data
+### work on unseen data
 ```
 newdf = pd.read_csv('./from_kaggle.csv')
 

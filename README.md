@@ -4,12 +4,7 @@ a small set of `scikit-learn` sklearn.Transformers (har har) to make constructin
 ##### tldr; objs you can plug into a sklearn.pipeline.Pipeline that can take a whole DataFrame and only transform certain things at each step
 
 ## Usage:
-```
-from autobots import *
-
-import pandas as pd, numpy as np
-from sklearn.pipeline import Pipeline
-```
+`from autobots import *`
 
 ### define transormations
 ```
